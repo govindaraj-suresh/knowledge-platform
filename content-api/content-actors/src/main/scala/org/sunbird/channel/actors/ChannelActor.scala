@@ -46,9 +46,14 @@ class ChannelActor @Inject() (implicit oec: OntologyEngineContext) extends BaseA
     }
 
     def read(request: Request): Future[Response] = {
+        println("==> Input Request::" + request.getRequest)
+        println("==> Input Request Graph Id::" + request.graphId())
+
         DataNode.read(request).map(node => {
             val metadata: util.Map[String, AnyRef] = NodeUtil.serialize(node, null, request.getContext.get("schemaName").asInstanceOf[String], request.getContext.get("version").asInstanceOf[String])
-            if (suggestFrameworks && CollectionUtils.isEmpty(metadata.getOrDefault("frameworks", new util.ArrayList[AnyRef]()).asInstanceOf[util.List[AnyRef]])) {
+            println(metadata);
+            println(metadata.getOrDefault("frameworks", new util.ArrayList[AnyRef]()));
+           if (suggestFrameworks && CollectionUtils.isEmpty(metadata.getOrDefault("frameworks", new util.ArrayList[AnyRef]()).asInstanceOf[util.List[AnyRef]])) {
                 val frameworkList = ChannelManager.getAllFrameworkList()
                 if (!frameworkList.isEmpty) metadata.put("suggested_frameworks", frameworkList)
             }
