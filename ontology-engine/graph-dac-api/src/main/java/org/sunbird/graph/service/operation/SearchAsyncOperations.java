@@ -69,6 +69,7 @@ public class SearchAsyncOperations {
             Map<Long, Object> startNodeMap = new HashMap<Long, Object>();
             Map<Long, Object> endNodeMap = new HashMap<Long, Object>();
             String query = SearchQueryGenerationUtil.generateGetNodeByUniqueIdsCypherQuery(parameterMap);
+            System.out.println("getNodeByUniqueIds by searchCriteria for graphId-->"+graphId+"<-- query===>"+query+"<==");
             Map<String, Object> params = searchCriteria.getParams();
             CompletionStage<List<Node>> cs = session.runAsync(query, params)
                     .thenCompose(fn -> fn.listAsync()).thenApply(result -> {
@@ -172,6 +173,7 @@ public class SearchAsyncOperations {
                 parameterMap.put(GraphDACParams.nodeId.name(), nodeId);
                 parameterMap.put(GraphDACParams.getTags.name(), getTags);
                 parameterMap.put(GraphDACParams.request.name(), request);
+                System.out.println("getNodeByUniqueId for graphId="+graphId+"<-- query==>"+SearchQueryGenerationUtil.generateGetNodeByUniqueIdCypherQuery(parameterMap)+"<==");
                 CompletionStage<Node> cs = session.runAsync(SearchQueryGenerationUtil.generateGetNodeByUniqueIdCypherQuery(parameterMap))
                         .thenCompose(fn -> fn.listAsync()).thenApply(records -> {
                             Node node = null;
@@ -252,7 +254,7 @@ public class SearchAsyncOperations {
             parameterMap.put(GraphDACParams.graphId.name(), graphId);
             parameterMap.put(GraphDACParams.nodeId.name(), nodeId);
             parameterMap.put(GraphDACParams.key.name(), key);
-
+            System.out.println("getNodeByUniqueId for graphId="+graphId+"<-- query==>"+SearchQueryGenerationUtil.generateGetNodeByUniqueIdCypherQuery(parameterMap)+"<==");
             CompletionStage<Property> cs = session.runAsync(SearchQueryGenerationUtil.generateGetNodePropertyCypherQuery(parameterMap))
                     .thenCompose(fn -> fn.singleAsync()).thenApply(record -> {
                 if (null != record && null != record.get(key)) {

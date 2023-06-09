@@ -48,8 +48,6 @@ class ChannelActor @Inject() (implicit oec: OntologyEngineContext) extends BaseA
     def read(request: Request): Future[Response] = {
         println("==> Input Request::" + request.getRequest)
         println("==> Input Request Graph Id::" + request.graphId())
-
-
         DataNode.read(request).map(node => {
             val metadata: util.Map[String, AnyRef] = NodeUtil.serialize(node, null, request.getContext.get("schemaName").asInstanceOf[String], request.getContext.get("version").asInstanceOf[String])
             println(metadata);
