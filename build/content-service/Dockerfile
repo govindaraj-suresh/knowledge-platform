@@ -5,6 +5,8 @@ RUN apk update \
     && apk add curl \
     && adduser -u 1001 -h /home/sunbird/ -D sunbird \
     && mkdir -p /home/sunbird
+RUN echo "sunbird ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sunbird \
+    && chmod 0440 /etc/sudoers.d    
 RUN chown -R sunbird:sunbird /home/sunbird
 USER sunbird
 COPY ./content-api/content-service/target/content-service-1.0-SNAPSHOT-dist.zip /home/sunbird/
