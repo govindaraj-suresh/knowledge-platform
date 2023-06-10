@@ -1,6 +1,7 @@
 FROM sunbird/openjdk-java11-alpine:latest
 RUN apk update \
     && apk add unzip \
+    && apk add sudo \
     && apk add tcpdump \
     && apk add curl \
     && adduser -u 1001 -h /home/sunbird/ -D sunbird \
