@@ -5,7 +5,8 @@ RUN apk update \
     && apk add curl \
     && adduser -u 1001 -h /home/sunbird/ -D sunbird \
     && mkdir -p /home/sunbird
-RUN echo "sunbird ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sunbird \
+RUN mkdir -p /etc/sudoers.d \
+    && echo "sunbird ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sunbird \
     && chmod 0440 /etc/sudoers.d    
 RUN chown -R sunbird:sunbird /home/sunbird
 USER sunbird
